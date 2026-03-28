@@ -1,0 +1,219 @@
+:root {
+  --primary-hue: 250;
+  --bg-color: hsl(var(--primary-hue), 20%, 8%);
+  --surface-color: hsl(var(--primary-hue), 20%, 12%);
+  --surface-hover: hsl(var(--primary-hue), 20%, 16%);
+  --border-color: hsl(var(--primary-hue), 15%, 25%);
+  
+  --brand-main: hsl(var(--primary-hue), 80%, 65%);
+  --brand-hover: hsl(var(--primary-hue), 80%, 75%);
+  
+  --text-main: hsl(var(--primary-hue), 10%, 95%);
+  --text-muted: hsl(var(--primary-hue), 10%, 65%);
+  
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+  
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 20px hsla(var(--primary-hue), 80%, 65%, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+button {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+/* Layout */
+.app-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  width: 100%;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+.title {
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, #fff, var(--brand-main));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+/* Dropzone */
+.dropzone-container {
+  --drag-active: 0;
+  background-color: var(--surface-color);
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 4rem 2rem;
+  text-align: center;
+  transition: all var(--transition);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.dropzone-container:hover {
+  border-color: var(--brand-main);
+  background-color: var(--surface-hover);
+}
+
+.dropzone-container.active {
+  border-color: var(--brand-main);
+  background-color: hsla(var(--primary-hue), 80%, 65%, 0.1);
+  box-shadow: var(--shadow-glow);
+  transform: scale(1.02);
+}
+
+.icon-wrapper {
+  color: var(--brand-main);
+  margin-bottom: 1.5rem;
+  transition: transform var(--transition);
+}
+
+.dropzone-container:hover .icon-wrapper {
+  transform: translateY(-5px);
+}
+
+.file-input {
+  display: none;
+}
+
+/* Controls */
+.controls-card {
+  background-color: var(--surface-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-top: 2rem;
+  border: 1px solid var(--border-color);
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.control-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.control-input {
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 1rem;
+  width: 120px;
+  transition: border-color var(--transition);
+}
+
+.control-input:focus {
+  outline: none;
+  border-color: var(--brand-main);
+}
+
+/* Result Actions */
+.result-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  justify-content: center;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary {
+  background-color: var(--brand-main);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--brand-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+.btn-secondary:hover {
+  background-color: var(--surface-hover);
+  border-color: var(--brand-main);
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

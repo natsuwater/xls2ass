@@ -1,0 +1,1 @@
+src/App.tsx(4,29): error TS1484: 'ConversionOptions' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
