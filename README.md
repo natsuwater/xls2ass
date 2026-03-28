@@ -1,73 +1,45 @@
-# React + TypeScript + Vite
+# Excel to ASS Converter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+このアプリは、原文と翻訳を対比した **Excelファイル (.xlsx)** を、Aegisubなどの字幕編集ソフトで読み込める **字幕ファイル (.ass)** または **確認用の対訳テキスト (.txt)** に変換するためのウェブアプリケーションです。
 
-Currently, two official plugins are available:
+[アプリを開く（https://natsuwater.github.io/xls2ass/）](https://natsuwater.github.io/xls2ass/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 安全性とプライバシー（データ非送信）
+**完全ブラウザ完結（データのアップロードなし）**
+Excelファイルの読み込みや変換処理は、すべてお手元のパソコンやスマートフォン上のブラウザ内（手元の端末の中）だけで実行されます。データが外部のサーバーに送信されたり、保存されたりすることは一切ありません。
+機密情報を含む未公開データや翻訳中の原稿であっても、安全・安心にご利用いただけます。
 
-## React Compiler
+## 対応しているExcelのフォーマット
+本アプリでは、以下の列（ヘッダー）を含むエクセルファイルを読み込んで変換を行います。
+※ シートの「1行目」には必ず以下のような見出しを入れてください。
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| 見出し（ヘッダー）名 | 用途・内容の説明 |
+| --- | --- |
+| **表示開始時間** | 例: `0:00:23:14` （時:分:秒:フレーム番号） |
+| **表示終了時間** | 上記と同様の形式で記載する終了時間 |
+| **原文** | 翻訳元のオリジナルテキスト |
+| **字幕** | （任意）翻訳や編集を行った字幕テキスト。空欄の場合は「原文」がそのまま出力されます。 |
+| **トラック** | （任意）`A` と入力すると `Audio`（音声・特定スタイル）、それ以外は `Telop`（テロップ）として処理されます。 |
+| **最大** | （TXT出力用・任意）文字数制限などの数値 |
+| **原稿** | （TXT出力用・任意）原稿側に関する数値 |
 
-## Expanding the ESLint configuration
+> **📝 備考**: 確認用の対訳テキスト生成の際、「最大」「原稿」という見出しが無くても、エクセルの "7列目(G列)" と "8列目(H列)" に数値が存在する場合はこれを、最大値と、翻訳の文字数カウントとして扱います。（空欄の場合は無視されます）。
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## アプリとしてインストールする方法 (PWA対応)
+このツールは PWA（Progressive Web App）という技術で作られており、ブラウザから独立した通常のソフトウェア（アプリ）としてパソコンやスマートフォンにインストールできます。
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+インストール後は、インターネットに接続されていない**オフライン環境でも起動し、利用することが可能**です。
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### インストール手順
+1. まず、ブラウザで [アプリのページ](https://natsuwater.github.io/xls2ass/) にアクセスします。
+2. お使いの環境に合わせて以下の操作を行います。
+   - **パソコン (Google Chrome / Edge)** 
+     画面上部のURLアドレスバー右端に表示される「インストール」アイコン（PCと下矢印のマーク）をクリックします。
+   - **iPhone / iPad (Safari)**
+     画面下部の「共有」ボタン（四角から上矢印が出ているアイコン）をタップし、メニューから「**ホーム画面に追加**」を選択します。
+   - **Android スマートフォン**
+     アクセス中に出現する「ホーム画面に追加」をタップするか、ブラウザ右上にある縦三点リーダー（︙）メニューから「ホーム画面に追加」を選択します。
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+*This application is built with React, Vite, and TypeScript.*
